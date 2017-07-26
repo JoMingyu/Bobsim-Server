@@ -35,6 +35,7 @@ public class Parser extends Thread {
 					meals[0] = dayMenu.breakfast;
 					meals[1] = dayMenu.lunch;
 					meals[2] = dayMenu.dinner;
+					System.out.println(meals[0]);
 					
 					for(int j = 0; j < 3; j++) {
 						menuArray[j] = new JSONArray();
