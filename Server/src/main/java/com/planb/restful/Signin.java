@@ -12,9 +12,9 @@ import io.vertx.core.Handler;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.ext.web.RoutingContext;
 
-@Route(uri = "/auth/signup", method = HttpMethod.POST)
-@API(functionCategory = "계정", summary = "회원가입")
-@REST(requestBody = "id: String, pw: String", successCode = 201, failureCode = 204, etc = "아이디가 겹칠 경우 204")
+@Route(uri = "/auth/signin", method = HttpMethod.POST)
+@API(functionCategory = "계정", summary = "로그인")
+@REST(requestBody = "id: String, pw: String", successCode = 201, failureCode = 204, etc = "로그인 실패 시 204")
 public class Signin implements Handler<RoutingContext> {
 	@Override
 	public void handle(RoutingContext ctx) {
@@ -24,11 +24,10 @@ public class Signin implements Handler<RoutingContext> {
 		ResultSet rs = MySQL.executeQuery("SELECT * FROM account WHERE id=? AND pw=?", id, pw);
 		try {
 			if(rs.next()) {
-				ctx.response().setStatusCode(204).end();
+				ctx.response().setStatusCode(201).end();
 				ctx.response().close();
 			} else {
-				MySQL.executeUpdate("INSERT INTO account VALUES(?, ?)", id, pw);
-				ctx.response().setStatusCode(201).end();
+				ctx.response().setStatusCode(204).end();
 				ctx.response().close();
 			}
 		} catch (SQLException e) {
