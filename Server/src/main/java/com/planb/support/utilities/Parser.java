@@ -3,10 +3,11 @@ package com.planb.support.utilities;
 import java.util.Calendar;
 import java.util.List;
 
-import org.hyunjun.school.School;
-import org.hyunjun.school.SchoolException;
-import org.hyunjun.school.SchoolMenu;
 import org.json.JSONArray;
+
+import com.planb.parser.School;
+import com.planb.parser.SchoolException;
+import com.planb.parser.SchoolMenu;
 
 public class Parser extends Thread {
 	@Override
