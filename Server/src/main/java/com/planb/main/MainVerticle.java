@@ -3,6 +3,7 @@ package com.planb.main;
 import com.planb.support.routing.Routing;
 import com.planb.support.utilities.Config;
 import com.planb.support.utilities.Log;
+import com.planb.support.utilities.Parser;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
@@ -25,6 +26,7 @@ public class MainVerticle extends AbstractVerticle {
 		Routing.route(router, "com.planb.restful");
 		
 		router.route().handler(StaticHandler.create());
+		new Parser().start();
 		
 		Log.info("Server Started At : " + serverPort);
 		vertx.createHttpServer().requestHandler(router::accept).listen(serverPort);
