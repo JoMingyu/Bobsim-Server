@@ -17,7 +17,7 @@ import io.vertx.ext.web.RoutingContext;
 
 @Route(uri = "/meal", method = HttpMethod.GET)
 @API(functionCategory = "급식", summary = "급식")
-@REST(requestBody = "date: String, (YYYY-MM-DD)", successCode = 200, failureCode = 204, etc = "해당 급식 정보 없을 때 204")
+@REST(params = "date: String, (YYYY-MM-DD)", responseBody = "breakfast: String, breakfast_like: String, lunch: String, lunch_like: String, dinner: String, dinner_like: String", successCode = 200, failureCode = 204, etc = "해당 급식 정보 없을 때 204")
 public class Meal implements Handler<RoutingContext> {
 	@Override
 	public void handle(RoutingContext ctx) {
