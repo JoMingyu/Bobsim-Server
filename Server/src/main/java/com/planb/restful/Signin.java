@@ -1,8 +1,12 @@
 package com.planb.restful;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import com.planb.support.routing.API;
 import com.planb.support.routing.REST;
 import com.planb.support.routing.Route;
+import com.planb.support.utilities.MySQL;
 
 import io.vertx.core.Handler;
 import io.vertx.core.http.HttpMethod;
@@ -15,6 +19,20 @@ public class Signin implements Handler<RoutingContext> {
 	@Override
 	public void handle(RoutingContext ctx) {
 		String id = ctx.request().getFormAttribute("id");
-		String password = ctx.request().getFormAttribute("password");
+		String pw = ctx.request().getFormAttribute("pw");
+		
+		ResultSet rs = MySQL.executeQuery("SELECT * FROM account WHERE id=? AND pw=?", id, pw);
+		try {
+			if(rs.next()) {
+				ctx.response().setStatusCode(204).end();
+				ctx.response().close();
+			} else {
+				MySQL.executeUpdate("INSERT INTO account VALUES(?, ?)", id, pw);
+				ctx.response().setStatusCode(201).end();
+				ctx.response().close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
